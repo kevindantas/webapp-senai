@@ -1,0 +1,16 @@
+{
+  "name": "AskNator",
+  "short_name": "AskNator",
+  "description": "Fale as suas dúvidas sobre a aula",
+  "theme_color": "#FF0000",
+  "background_color": "#FF0000",
+  "start_url": "/",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "images/icon/app-icon.png",
+      "sizes":  "48x48",
+      "type": "image/png"
+    }
+  ]
+}
