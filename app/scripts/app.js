@@ -73,13 +73,13 @@ document.querySelector('#createPost').addEventListener('click', function (e) {
 
 
 
-
 /**
  * Show search bar
  */
 document.querySelector('.search-btn').addEventListener('click', function (e) {
   var element = this;
   element.parentNode.querySelector('.search-bar').classList.add('-active');
+
   var input = element.parentNode.querySelector('.search-bar input');
 
   input.value = '';
@@ -98,3 +98,9 @@ document.querySelector('.toolbar .back-btn').addEventListener('click', function 
 });
 
 
+
+postsRef.on('child_added', function (snapshot) {
+  console.log(snapshot);
+  var chat = snapshot.val();
+
+});

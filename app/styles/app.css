@@ -58,6 +58,7 @@ input, textarea {
     height: 24px;
 }
 
+
     /**************
     * Search bar  *
     ***************/
@@ -96,8 +97,6 @@ input, textarea {
 
 
 
-
-
 /**************************************
  * * * * * * *  Content * * * * * * * *
  **************************************/
@@ -130,6 +129,11 @@ input, textarea {
 .box-shadow {
     box-shadow: 1px 3px 7px rgba(0,0,0 ,.2);
 }
+
+#content h3{
+    padding: 16px;
+}
+
 
 .card {
     background: #fff;
