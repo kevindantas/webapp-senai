@@ -1,0 +1,336 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #ECEFF1;
+    color: #455A64;
+}
+
+button {
+    background: transparent;
+    border: none;
+}
+
+
+input, textarea {
+    font-family: 'Roboto', sans-serif;
+}
+
+
+
+/**************************************
+ * Toolbar
+ **************************************/
+.toolbar {
+    background: #FFC107;
+    margin: 0;
+    height: 48px;
+    line-height: 48px;
+    box-shadow: 0 2px 10px rgba(0,0,0 ,.15);
+    position: relative;
+    z-index: 1;
+}
+
+.toolbar a {
+    color: #3E2723;
+    text-decoration: none;
+    font-size: 18px;
+    padding-left: 16px;
+}
+
+.toolbar button.search-btn {
+    background: transparent;
+    border: none;
+    float: right;
+}
+
+
+.toolbar button.search-btn {
+    fill: #3E2723;
+    margin: 12px;
+}
+
+.toolbar svg {
+    width: 24px;
+    height: 24px;
+}
+
+    /**************
+    * Search bar  *
+    ***************/
+    .toolbar .search-bar {
+        background: #fff;
+        opacity: 0;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        transition: 0.2s opacity;
+        pointer-events: none;
+    }
+
+
+    .toolbar .search-bar .back-btn {
+        margin-top: 14px;
+        padding-left: 8px;
+        padding-right: 8px;
+        float: left;
+    }
+
+    .toolbar .search-bar input {
+        width: calc(100% - 48px);
+        padding: 8px;
+        border: none;
+        font-size: 17px;
+        border-bottom: 2px solid #546E7A;
+    }
+
+    .toolbar .search-bar.-active {
+        opacity: 1;
+        pointer-events: all;
+    }
+
+
+
+
+
+
+/**************************************
+ * * * * * * *  Content * * * * * * * *
+ **************************************/
+#content {
+    max-width: 720px;
+    margin: auto;
+    border-radius: 3px;
+    position: relative;
+}
+
+#content h3{
+    padding: 16px;
+}
+
+#transition-content {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transform: translate(0, 100vh);
+    transition: transform 0.3s ease-in;
+}
+
+#transition-content.-active {
+    transform: translate(0, 0);
+    opacity: 1;
+}
+
+.box-shadow {
+    box-shadow: 1px 3px 7px rgba(0,0,0 ,.2);
+}
+
+.card {
+    background: #fff;
+    padding: 16px;
+    border-bottom: 1px solid #ddd;
+}
+
+
+.card hr {
+    color: #ddd
+}
+
+.card .title {
+    margin-bottom: 24px;
+    font-size: 22px;
+}
+
+.card .card-options {
+    color: #aaa;
+}
+
+.card .card-options .comments {
+    float: right;
+}
+
+
+
+.create-form {
+    background: #fff;
+    padding: 10px;
+}
+
+.create-form label {
+    float: left;
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+.create-form h2 {
+    margin-bottom: 24px;
+}
+
+
+.create-form label input,
+.create-form label textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid #546E7A;
+    padding: 8px;
+}
+
+
+.create-form label input:focus,
+.create-form label textarea:focus {
+    border-bottom-color: #FFA000;
+}
+
+.btn {
+    text-transform: uppercase;
+    font-size: 16px;
+    padding: 16px;
+    border: none;
+    border-radius: 3px;
+    box-shadow: 2px 3px 6px rgba(0,0,0,.15);
+    transition: box-shadow 0.1s ease-in;
+    will-change: box-shadow;
+}
+
+.btn:focus, .btn:active {
+    box-shadow: 2px 3px 10px rgba(0,0,0,.25);
+}
+
+.btn.success:focus,
+.btn.success:active {
+    background: #7CB342;
+}
+
+.success {
+    background: #8BC34A;
+    color: #fff;
+}
+
+
+
+@keyframes animate-scale-in {
+    0% {
+        transform: scale(0);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+
+@keyframes animate-scale-out {
+    0% {
+        transform: scale(1);
+    }
+
+    100% {
+        transform: scale(0);
+    }
+}
+
+
+
+.fab-btn {
+    width: 48px;
+    height: 48px;
+    font-size: 24px;
+    position: absolute;
+    right: 5%;
+    bottom: 5%;
+    border: none;
+    border-radius: 1000px;
+    transition: 0.1s ease-in;
+    box-shadow: 1px 2px 6px rgba(0,0,0, .2);
+    will-change: transform;
+}
+
+
+.fab-btn.success:active {
+    background: #7CB342;
+}
+
+.fab-btn.animate-in {
+    animation: animate-scale-in 0.2s ease-out forwards;
+}
+
+.fab-btn.animate-out {
+    animation: animate-scale-out 0.2s ease-out forwards;
+}
+
+
+
+
+
+
+/**************************************
+ * * * * * * *  Feedback * * * * * * *
+ **************************************/
+.toast {
+    width: calc(100% - 4vw);
+    color: #fff;
+    margin: 2vw;
+    position: fixed;
+    z-index: 10;
+    bottom: 3vh;
+    overflow: hidden;
+    padding: 7px;
+    pointer-events: none;
+}
+
+.toast.active {
+    pointer-events: all;
+}
+
+.toast .toast-wrapper {
+    background: rgba(80,80,80,.95);
+    padding: 7px;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: row;
+    box-shadow: 1px 2px 10px rgba(0,0,0,.25);
+    transform: translateY(150%);
+    transition: transform 0.3s ease-in-out;
+    will-change: transform;
+}
+
+.toast.active .toast-wrapper {
+    transform: translateY(0%);
+}
+
+
+.toast-content {
+    padding: 10px 20px;
+    flex: 1 0 auto;
+}
+
+
+.toast .button {
+    border-radius: 3px;
+    text-transform: uppercase;
+    padding: 10px;
+    color: #fff;
+}
+
+.toast .button:hover,
+.toast .button:active,
+.toast .button:focus {
+    background: rgba(0,0,0,.2);
+}
+
+.toast.success {
+    background: #8BC34A;
+    color: #555;
+}
+
+.toast.error {
+    background: #F44336;
+    color: #fff;
+}
