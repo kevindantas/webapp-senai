@@ -26,6 +26,9 @@ var postsRef = database.ref().child('posts');
  });
 
 
+var transitionContent = document.querySelector('#transition-content'),
+    fab = document.querySelector('#createPost');
+
 
 
 function setSendPostHandler () {
@@ -40,28 +43,29 @@ function setSendPostHandler () {
     var post = {
       title: titleField.value,
       description: descriptionField.value,
-      createdAt: new Date()
+      createdAt: new Date().toISOString(),
+      comments: []
     };
-    
+
+    fab.classList.toggle('animate-out');
+    fab.classList.add('animate-in');
+    transitionContent.classList.toggle('-active');
     new Toast('Post criado com sucesso!', 3000);
     return postsRef.push().set(post);
   });
 }
 
 
-
-
 /**
  * Transition for create a new post page
  */
-document.querySelector('#createPost').addEventListener('click', function (e) {
+fab.addEventListener('click', function (e) {
   this.classList.add('animate-out');
 
   // history.pushState({}, 'Cadastrar Pergunta', 'cadastrar');
   fetch('./views/create-post.html').then(function (data) {
     return data.text();
   }).then(function (html) {
-    transitionContent = document.querySelector('#transition-content');
     transitionContent.innerHTML = html;
     transitionContent.classList.add('-active');
   }).then(function () {
@@ -109,16 +113,20 @@ database.ref().child('posts').once('value').then(function (snapshot) {
   let posts = snapshot.val();
 
   var count = 0;
+  
   for (let id in posts) {
     let post = posts[id];
-    var cardWrapper = document.createElement('div');
+    
+
+
+    let cardWrapper = document.createElement('div');
     cardWrapper.classList.add('card');
     cardWrapper.classList.add('post-item');
     cardWrapper.innerHTML = '' +
       '<h1 class="title">'+post.title+'</h1>'+
       '<div class="card-options">' +
-        '<span class="time">'+post.createdAt+'</span>' +
-        '<span class="comments">49 comentários</span>' +
+        '<span class="time">'+moment(post.createdAt).fromNow()+'</span>' +
+        '<span class="comments"></span>' +
       '</div>';
     count++;
     postsElement.appendChild(cardWrapper);
