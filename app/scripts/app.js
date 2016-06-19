@@ -21,7 +21,6 @@ var storage = app.storage();
 var postsRef = database.ref().child('posts');
 
  postsRef.on('child_added', function (snapshot) {
- console.log(snapshot);
  var chat = snapshot.val();
 
  });
@@ -40,13 +39,12 @@ function setSendPostHandler () {
 
     var post = {
       title: titleField.value,
-      description: descriptionField.value
+      description: descriptionField.value,
+      createdAt: new Date()
     };
     
-    new Toast('Post criado com sucesso!', 3000, {
-      // className
-    });
-    // return postsRef.push().set(post);
+    new Toast('Post criado com sucesso!', 3000);
+    return postsRef.push().set(post);
   });
 }
 
@@ -100,7 +98,33 @@ document.querySelector('.toolbar .back-btn').addEventListener('click', function 
 
 
 postsRef.on('child_added', function (snapshot) {
-  console.log(snapshot);
   var chat = snapshot.val();
-
+  
 });
+
+var content = document.getElementById('content'),
+    postsElement = content.querySelector('.posts');
+
+database.ref().child('posts').once('value').then(function (snapshot) {
+  let posts = snapshot.val();
+
+  var count = 0;
+  for (let id in posts) {
+    let post = posts[id];
+    var cardWrapper = document.createElement('div');
+    cardWrapper.classList.add('card');
+    cardWrapper.classList.add('post-item');
+    cardWrapper.innerHTML = '' +
+      '<h1 class="title">'+post.title+'</h1>'+
+      '<div class="card-options">' +
+        '<span class="time">'+post.createdAt+'</span>' +
+        '<span class="comments">49 comentários</span>' +
+      '</div>';
+    count++;
+    postsElement.appendChild(cardWrapper);
+  }
+
+  if(count == 0) {
+    postsElement.innerHTML = '<h3>Nenhum post criado</h3>'
+  }
+})
