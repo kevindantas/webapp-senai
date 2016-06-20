@@ -70,8 +70,13 @@ class Toast {
   }
 }
 
-
+/**
+ * @class Modal
+ * Create a modal from the parameters
+ */
 class Modal {
+
+
   /**
    * @param {object} options
    * 
@@ -79,19 +84,24 @@ class Modal {
   constructor (options) {
     this.options = options;
 
+    // Show the overlay
     this.overlay = document.querySelector('.overlay');
     this.overlay.classList.add('active');
 
+
+    // Create the box and append to body
     this.modal = document.createElement('div');
     this.modal.setAttribute('class', 'modal');
     document.querySelector('body').appendChild(this.modal);
 
-
+    // Centralize the modal
     this.modal.style.marginLeft = -(this.modal.offsetWidth / 2)+'px';
 
 
     if (options.fab)
       options.fab.classList.add('animate-out');
+
+
 
     if(options.templateUrl) {
       this.promise = fetch(options.templateUrl).then(function (data) {
@@ -113,7 +123,7 @@ class Modal {
   
   
   /**
-   * 
+   * Hide and remove the modal
    */
   hide() {
     this.overlay.classList.remove('active');

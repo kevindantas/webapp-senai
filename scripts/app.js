@@ -30,11 +30,10 @@ var isNewChild = false;
 
 
 /**
- * Transition for create a new post page
+ * Create a new post
  */
 fab.addEventListener('click', function (e) {
 
-  // history.pushState({}, 'Cadastrar Pergunta', 'cadastrar');
   var modal = new Modal({
     templateUrl: './views/createpost.html',
     fab: this
@@ -73,6 +72,8 @@ fab.addEventListener('click', function (e) {
 
 
 
+
+
 /**
  * Show search bar
  */
@@ -99,6 +100,17 @@ document.querySelector('.toolbar .back-btn').addEventListener('click', function 
 
 
 
+
+
+
+/**************************************
+ * * * * *  Firebase Events * * * * * *
+ **************************************/
+
+
+/**
+ * Called only once, check if there's posts on database
+ */
 postsRef.once('value').then(function (snapshot) {
   let posts = snapshot.val(),
       count = 0;
@@ -107,9 +119,12 @@ postsRef.once('value').then(function (snapshot) {
 
   if(count == 0)
     postsElement.innerHTML = '<h3 class="empty-placeholder">Nenhum post criado</h3>'
-
 });
 
+
+/**
+ * Listener for each child existing in the database
+ */
 postsRef.on('child_added', function (snapshot) {
   var post = snapshot.val();
   loading.classList.add('hide');
@@ -117,6 +132,12 @@ postsRef.on('child_added', function (snapshot) {
 });
 
 
+
+/**
+ * create a new card with the post information
+ *
+ * @param {object} post Post information
+ */
 function addCard(post) {
   var emptyPlaceholder = document.querySelector('.empty-placeholder');
 
@@ -135,3 +156,12 @@ function addCard(post) {
 
   postsElement.insertBefore(cardWrapper, postsElement.firstChild);
 }
+
+
+
+
+/************************************************************
+ *                                                          *
+ *           COLOQUE SEU CÓDIGO AQUI EM BAIXO               *
+ *                                                          *
+ ************************************************************/
