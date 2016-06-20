@@ -27,7 +27,8 @@ var postsRef = database.ref().child('posts');
 
 
 var transitionContent = document.querySelector('#transition-content'),
-    fab = document.querySelector('#createPost');
+    fab = document.querySelector('#createPost'),
+    loading = document.querySelector('.loading');
 
 
 
@@ -63,14 +64,9 @@ fab.addEventListener('click', function (e) {
   this.classList.add('animate-out');
 
   // history.pushState({}, 'Cadastrar Pergunta', 'cadastrar');
-  fetch('./views/create-post.html').then(function (data) {
-    return data.text();
-  }).then(function (html) {
-    transitionContent.innerHTML = html;
-    transitionContent.classList.add('-active');
-  }).then(function () {
-    setSendPostHandler();
-  })
+  new Modal({
+    templateUrl: './views/createpost.html'
+  });
 });
 
 
@@ -100,24 +96,16 @@ document.querySelector('.toolbar .back-btn').addEventListener('click', function 
 });
 
 
-
-postsRef.on('child_added', function (snapshot) {
-  var chat = snapshot.val();
-  
-});
-
 var content = document.getElementById('content'),
     postsElement = content.querySelector('.posts');
 
-database.ref().child('posts').once('value').then(function (snapshot) {
+postsRef.once('value').then(function (snapshot) {
   let posts = snapshot.val();
-
+  loading.classList.add('hide');
   var count = 0;
   
   for (let id in posts) {
     let post = posts[id];
-    
-
 
     let cardWrapper = document.createElement('div');
     cardWrapper.classList.add('card');
@@ -135,4 +123,4 @@ database.ref().child('posts').once('value').then(function (snapshot) {
   if(count == 0) {
     postsElement.innerHTML = '<h3>Nenhum post criado</h3>'
   }
-})
+});

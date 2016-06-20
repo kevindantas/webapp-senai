@@ -19,6 +19,9 @@ input, textarea {
     font-family: 'Roboto', sans-serif;
 }
 
+.hide {
+    display: none;
+}
 
 
 /**************************************
@@ -340,4 +343,13 @@ input, textarea {
 .toast.error {
     background: #F44336;
     color: #fff;
+}
+
+
+.loading {
+    text-align: center;
+}
+
+.loading svg path {
+    fill: #445963;
 }
