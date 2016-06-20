@@ -156,12 +156,3 @@ function addCard(post) {
 
   postsElement.insertBefore(cardWrapper, postsElement.firstChild);
 }
-
-
-
-
-/************************************************************
- *                                                          *
- *           COLOQUE SEU CÓDIGO AQUI EM BAIXO               *
- *                                                          *
- ************************************************************/
