@@ -33,6 +33,44 @@ input, textarea {
 }
 
 
+/**************************************
+ * * * * * * *  Animations * * * * * * *
+ **************************************/
+@keyframes animate-scale-in {
+    0% {
+        transform: scale(0);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+
+@keyframes animate-scale-out {
+    0% {
+        transform: scale(1);
+    }
+
+    100% {
+        transform: scale(0);
+    }
+}
+
+@keyframes bg-highlight {
+    0% {
+        background: #C7E5C8;
+    }
+
+    90% {
+        background: #C7E5C8;
+    }
+
+    100% {
+        background: #FFF;
+    }
+}
+
 
 
 /**************************************
@@ -124,6 +162,11 @@ input, textarea {
 
 #content h3{
     padding: 16px;
+}
+
+.post-item.-highlight {
+    animation: bg-highlight 3s ease-out forwards;
+    will-change: background-color;
 }
 
 #transition-content {
@@ -232,29 +275,6 @@ input, textarea {
 .success {
     background: #8BC34A;
     color: #fff;
-}
-
-
-
-@keyframes animate-scale-in {
-    0% {
-        transform: scale(0);
-    }
-
-    100% {
-        transform: scale(1);
-    }
-}
-
-
-@keyframes animate-scale-out {
-    0% {
-        transform: scale(1);
-    }
-
-    100% {
-        transform: scale(0);
-    }
 }
 
 

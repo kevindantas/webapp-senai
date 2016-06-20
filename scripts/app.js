@@ -16,45 +16,17 @@ var config = {
 
 var app = firebase.initializeApp(config);
 var database = app.database();
-var storage = app.storage();
 
 var postsRef = database.ref().child('posts');
-
- postsRef.on('child_added', function (snapshot) {
- var chat = snapshot.val();
-
- });
 
 
 var transitionContent = document.querySelector('#transition-content'),
     fab = document.querySelector('#createPost'),
-    loading = document.querySelector('.loading');
+    loading = document.querySelector('.loading'),
+    content = document.getElementById('content'),
+    postsElement = content.querySelector('.posts');
 
-
-
-function setSendPostHandler () {
-  document.querySelector('#sendPost').addEventListener('submit', function (e) {
-    e.preventDefault();
-
-    var element = this;
-
-    var titleField = element.querySelector('.title'),
-        descriptionField = element.querySelector('.description');
-
-    var post = {
-      title: titleField.value,
-      description: descriptionField.value,
-      createdAt: new Date().toISOString(),
-      comments: []
-    };
-
-    fab.classList.toggle('animate-out');
-    fab.classList.add('animate-in');
-    transitionContent.classList.toggle('-active');
-    new Toast('Post criado com sucesso!', 3000);
-    return postsRef.push().set(post);
-  });
-}
+var isNewChild = false;
 
 
 /**
@@ -88,6 +60,7 @@ fab.addEventListener('click', function (e) {
       fab.classList.add('animate-in');
       transitionContent.classList.toggle('-active');
       modal.hide();
+      isNewChild = true;
       new Toast('Post criado com sucesso!', 3000);
       return postsRef.push().set(post);
     });
@@ -125,31 +98,40 @@ document.querySelector('.toolbar .back-btn').addEventListener('click', function 
 });
 
 
-var content = document.getElementById('content'),
-    postsElement = content.querySelector('.posts');
 
 postsRef.once('value').then(function (snapshot) {
-  let posts = snapshot.val();
-  loading.classList.add('hide');
-  var count = 0;
+  let posts = snapshot.val(),
+      count = 0;
   
-  for (let id in posts) {
-    let post = posts[id];
+  for (let id in posts) count++;
 
-    let cardWrapper = document.createElement('div');
-    cardWrapper.classList.add('card');
-    cardWrapper.classList.add('post-item');
-    cardWrapper.innerHTML = '' +
-      '<h1 class="title">'+post.title+'</h1>'+
-      '<div class="card-options">' +
-        '<span class="time">'+moment(post.createdAt).fromNow()+'</span>' +
-        '<span class="comments"></span>' +
-      '</div>';
-    count++;
-    postsElement.appendChild(cardWrapper);
-  }
+  if(count == 0)
+    postsElement.innerHTML = '<h3 class="empty-placeholder">Nenhum post criado</h3>'
 
-  if(count == 0) {
-    postsElement.innerHTML = '<h3>Nenhum post criado</h3>'
-  }
 });
+
+postsRef.on('child_added', function (snapshot) {
+  var post = snapshot.val();
+  loading.classList.add('hide');
+  addCard(post);
+});
+
+
+function addCard(post) {
+  var emptyPlaceholder = document.querySelector('.empty-placeholder');
+
+  if(emptyPlaceholder) emptyPlaceholder.remove();
+
+
+  let cardWrapper = document.createElement('div');
+  cardWrapper.setAttribute('class', 'card post-item');
+  if(isNewChild) cardWrapper.classList.add('-highlight');
+  cardWrapper.innerHTML = '' +
+    '<h1 class="title">'+post.title+'</h1>'+
+    '<div class="card-options">' +
+    '<span class="time">'+moment(post.createdAt).fromNow()+'</span>' +
+    '<span class="comments"></span>' +
+    '</div>';
+
+  postsElement.insertBefore(cardWrapper, postsElement.firstChild);
+}
