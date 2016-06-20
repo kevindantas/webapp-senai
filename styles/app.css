@@ -12,11 +12,13 @@ body {
 button {
     background: transparent;
     border: none;
+    outline: none;
 }
 
 
 input, textarea {
     font-family: 'Roboto', sans-serif;
+    outline: none;
 }
 
 .hide {
