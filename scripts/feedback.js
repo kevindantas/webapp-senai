@@ -77,6 +77,8 @@ class Modal {
    * 
    */
   constructor (options) {
+    this.options = options;
+
     this.overlay = document.querySelector('.overlay');
     this.overlay.classList.add('active');
 
@@ -86,21 +88,24 @@ class Modal {
 
 
     this.modal.style.marginLeft = -(this.modal.offsetWidth / 2)+'px';
+
+
+    if (options.fab)
+      options.fab.classList.add('animate-out');
+
     if(options.templateUrl) {
-      fetch(options.templateUrl).then(function (data) {
+      this.promise = fetch(options.templateUrl).then(function (data) {
         if(options.response)
           return data[options.response]();
         return data.text();
       }).then(html => {
         this.modal.innerHTML = html;
         this.modal.classList.add('-active');
-      }).then(function () {
-        options.callback();
-      }).catch(function (err) {
-        console.error('Fetch failed: '+err)
       })
+      .catch(function (err) {
+        console.error('Fetch failed: '+err)
+      });
     }
-
 
   }
   
@@ -112,6 +117,11 @@ class Modal {
    */
   hide() {
     this.overlay.classList.remove('active');
+    this.modal.classList.remove('-active');
+    this.modal.classList.remove('-active');
+    if (this.options.fab)
+      this.options.fab.classList.remove('animate-out');
+      this.options.fab.classList.add('animate-in');
   }
   
 }

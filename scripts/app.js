@@ -61,13 +61,41 @@ function setSendPostHandler () {
  * Transition for create a new post page
  */
 fab.addEventListener('click', function (e) {
-  this.classList.add('animate-out');
 
   // history.pushState({}, 'Cadastrar Pergunta', 'cadastrar');
-  new Modal({
+  var modal = new Modal({
     templateUrl: './views/createpost.html',
-    callback: setSendPostHandler
+    fab: this
   });
+  
+  modal.promise.then(function (a) {
+    document.querySelector('#sendPost').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      var element = this;
+
+      var titleField = element.querySelector('.title'),
+          descriptionField = element.querySelector('.description');
+
+      var post = {
+        title: titleField.value,
+        description: descriptionField.value,
+        createdAt: new Date().toISOString(),
+        comments: []
+      };
+
+      fab.classList.toggle('animate-out');
+      fab.classList.add('animate-in');
+      transitionContent.classList.toggle('-active');
+      modal.hide();
+      new Toast('Post criado com sucesso!', 3000);
+      return postsRef.push().set(post);
+    });
+  });
+  
+  document.querySelector('.overlay').onclick = function () {
+    modal.hide();
+  }
 });
 
 
