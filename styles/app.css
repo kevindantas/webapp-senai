@@ -24,6 +24,17 @@ input, textarea {
 }
 
 
+.loading {
+    text-align: center;
+}
+
+.loading svg path {
+    fill: #445963;
+}
+
+
+
+
 /**************************************
  * Toolbar
  **************************************/
@@ -346,10 +357,39 @@ input, textarea {
 }
 
 
-.loading {
-    text-align: center;
+
+
+
+/**************************************
+ * * * * * * *  Modal * * * * * * * * *
+ **************************************/
+.overlay {
+    background: rgba(0, 0, 0, 0.48);
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease-in;
+    will-change: opacity;
 }
 
-.loading svg path {
-    fill: #445963;
+.overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.modal {
+    width: 80%;
+    max-width: 680px;
+    border-radius: 4px;
+    padding: 16px;
+    background: #fff;
+    overflow: hidden;
+    position: absolute;
+    top: 120px;
+    left: 50%;
+    z-index: 10;
 }

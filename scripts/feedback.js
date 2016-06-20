@@ -64,8 +64,54 @@ class Toast {
    * Hide the toast
    */
   hide () {
-    this.container.classList.remove('active')
+    this.container.classList.remove('active');
     clearTimeout(this.hideTimeout);
 
   }
+}
+
+
+class Modal {
+  /**
+   * @param {object} options
+   * 
+   */
+  constructor (options) {
+    this.overlay = document.querySelector('.overlay');
+    this.overlay.classList.add('active');
+
+    this.modal = document.createElement('div');
+    this.modal.setAttribute('class', 'modal');
+    document.querySelector('body').appendChild(this.modal);
+
+
+    this.modal.style.marginLeft = -(this.modal.offsetWidth / 2)+'px';
+    if(options.templateUrl) {
+      fetch(options.templateUrl).then(function (data) {
+        if(options.response)
+          return data[options.response]();
+        return data.text();
+      }).then(html => {
+        this.modal.innerHTML = html;
+        this.modal.classList.add('-active');
+      }).then(function () {
+        options.callback();
+      }).catch(function (err) {
+        console.error('Fetch failed: '+err)
+      })
+    }
+
+
+  }
+  
+  
+  
+  
+  /**
+   * 
+   */
+  hide() {
+    this.overlay.classList.remove('active');
+  }
+  
 }

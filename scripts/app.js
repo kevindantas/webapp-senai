@@ -65,7 +65,8 @@ fab.addEventListener('click', function (e) {
 
   // history.pushState({}, 'Cadastrar Pergunta', 'cadastrar');
   new Modal({
-    templateUrl: './views/createpost.html'
+    templateUrl: './views/createpost.html',
+    callback: setSendPostHandler
   });
 });
 
