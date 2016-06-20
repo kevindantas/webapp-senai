@@ -122,6 +122,12 @@ class Modal {
     if (this.options.fab)
       this.options.fab.classList.remove('animate-out');
       this.options.fab.classList.add('animate-in');
+
+    // Remove modal after CSS transition
+    this.modal.addEventListener("transitionend", function () {
+      this.remove();
+    }, true);
+
   }
   
 }
