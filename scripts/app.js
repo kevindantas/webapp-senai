@@ -43,7 +43,7 @@ fab.addEventListener('click', function (e) {
 
     var chat = {
       usuario: usuario ? usuario.email : null,
-      devideId: (usuario && usuario.deviceId) ? usuario.deviceId : null,
+      deviceId: (usuario && usuario.deviceId) ? usuario.deviceId : null,
       mensagem: mensagemField.value,
       createdAt: new Date().toISOString(),
     };
@@ -178,11 +178,9 @@ chatRef.on('child_added', function (snapshot) {
 function sendNotification (chat) {
   var usuario = localStorage.usuario ? JSON.parse(localStorage.usuario) : null;
 
-  // console.log(chat.deviceId);
-  // console.log(usuario.deviceId);
-
 
   if(chat.deviceId && usuario.deviceId && usuario.deviceId != chat.deviceId){
+    
     fetch('https://android.googleapis.com/gcm/send/'+usuario.deviceId, {
       method: 'post',
       Authorization: 'key=AIzaSyC7r9Fmkmo7pcVd9YwPUJDDNukfs5M2oA4',
