@@ -21,7 +21,7 @@ self.addEventListener('install', function (event) {
 				'scripts/moment.js'
 				]);
 		})
-		)
+	)
 });
 
 
@@ -35,12 +35,11 @@ self.addEventListener('fetch', function(event) {
 
 
 self.addEventListener('push', function (event) {
-	console.log(event);
 
 	event.waitUntil(
-		self.registration.showNotification('Titulo da notificacao', {
-			body: 'Your message'
-
+		self.registration.showNotification('Nome do invividuo', {
+			body: 'A mensagem do individuo',
+			icon: 'images/webchat.png'
 		})
 	)
 })
