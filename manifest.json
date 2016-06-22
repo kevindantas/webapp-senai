@@ -1,5 +1,6 @@
 {
   "name": "AskNator",
+  "gcm_sender_id": "706488509964",
   "short_name": "AskNator",
   "description": "Fale as suas dúvidas sobre a aula",
   "theme_color": "#E6AD00",
