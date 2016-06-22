@@ -167,26 +167,40 @@ chatRef.once('value').then(function (snapshot) {
 chatRef.on('child_added', function (snapshot) {
   var chat = snapshot.val();
   loading.classList.add('hide');
+  var usuario = localStorage.usuario ? JSON.parse(localStorage.usuario) : null;
 
-  sendNotification(chat);
+  sendNotification(chat, usuario);
 
-  addCard(chat);
+  addCard(chat, usuario);
 });
 
 
 
-function sendNotification (chat) {
-  var usuario = localStorage.usuario ? JSON.parse(localStorage.usuario) : null;
+function sendNotification (chat, usuario) {
+
 
 
   if(chat.deviceId && usuario.deviceId && usuario.deviceId != chat.deviceId){
-    
-    fetch('https://android.googleapis.com/gcm/send/'+usuario.deviceId, {
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("POST", 'https://android.googleapis.com/gcm/send/'+usuario.deviceId, true);
+    xhttp.setRequestHeader('Authorization', 'Bearer AIzaSyC7r9Fmkmo7pcVd9YwPUJDDNukfs5M2oA4');
+    xhttp.setRequestHeader('Access-Control-Allow-Origin', 'http://localhost');
+    xhttp.setRequestHeader('TTL', '60');
+    xhttp.withCredentials = false;
+
+    xhttp.send();
+
+    /*fetch(, {
       method: 'post',
-      Authorization: 'key=AIzaSyC7r9Fmkmo7pcVd9YwPUJDDNukfs5M2oA4',
-      TTL: 60,
-      'content-type': 'application/json'
-    })
+      
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        mode: 'no-cors',
+            'Host': 'localhost',
+        Authorization: 'Bearer AIzaSyC7r9Fmkmo7pcVd9YwPUJDDNukfs5M2oA4',
+        TTL: 60
+      }
+    })*/
   }
 
 
@@ -199,16 +213,19 @@ function sendNotification (chat) {
  *
  * @param {object} chat chat information
  */
-function addCard(chat) {
+function addCard(chat, usuario) {
   var emptyPlaceholder = document.querySelector('.empty-placeholder');
 
   if(emptyPlaceholder) emptyPlaceholder.remove();
 
+  var classes = 'card chat-message '
+  if(chat.usuario == usuario.email) classes += ' chat-me';
 
   let cardWrapper = document.createElement('div');
-  cardWrapper.setAttribute('class', 'card chat-message');
+  cardWrapper.setAttribute('class', classes);
   if(isNewChild) cardWrapper.classList.add('-highlight');
   cardWrapper.innerHTML = '' +
+    '<b class="card-options message">'+chat.usuario+'</b>'+
     '<p class="message">'+chat.mensagem+'</p>'+
     '<div class="card-options">' +
     '<span class="time">'+moment(chat.createdAt).fromNow()+'</span>' +

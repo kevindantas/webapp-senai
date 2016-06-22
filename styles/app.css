@@ -199,7 +199,7 @@ input, textarea {
 
 #login {
     background: #FFC006;
-    padding-top: 25%;
+    padding-top: 50px;
     position: fixed;
     top: 0;
     left: 0;
@@ -209,7 +209,9 @@ input, textarea {
 }
 
 #login form {
-    margin: 16px;
+    max-width: 720px;
+    display: block;
+    margin: 30px auto;
     border-radius: 3px;
     box-shadow: 0 0 15px rgba(0,0,0,.2);
 }
@@ -253,10 +255,6 @@ input, textarea {
 }
 
 
-.chat-messages {
-
-}
-
 .chat-item.-highlight {
     animation: bg-highlight 3s ease-out forwards;
     will-change: background-color;
@@ -288,7 +286,7 @@ input, textarea {
 }
 
 
-.card {
+.card.chat-message {
     background: #fff;
     padding: 16px;
     border-bottom: 1px solid #ddd;
@@ -297,16 +295,31 @@ input, textarea {
     position: relative;
 }
 
-.card::before {
+.card.chat-message:not(.chat-me ) {
+    margin-right: 40px;
+}
+
+
+.card.chat-message.chat-me {
+    margin-right: 16px;
+    margin-left: 40px;
+}
+
+.card.chat-message::before {
     content: '';
     width: 20px;
     height: 20px;
     border-top: 20px solid #fff;
     border-left: 20px solid transparent;
-
     position: absolute;
     left: -12px;
     top: 0;
+}
+
+.card.chat-message.chat-me::before {
+    border-right: 20px solid transparent;
+    left: auto;
+    right: -12px;
 }
 
 
@@ -416,7 +429,7 @@ form label input.error {
 
 .animate-in {
     animation: animate-scale-in 0.2s ease-out forwards;
-    
+
 }
 
 .animate-out {
