@@ -8,62 +8,54 @@
 
 // Initialize Firebase
 var config = {
-  apiKey: "AIzaSyCTubMzanl4JtO4zKkJzqC9m2cdEwLS984",
-  authDomain: "webapp-senai.firebaseapp.com",
-  databaseURL: "https://webapp-senai.firebaseio.com",
-  storageBucket: "webapp-senai.appspot.com"
+    apiKey: "AIzaSyDQ2eXga8rJS7Z0cLahthJ5ngUUjBaIxtI",
+    authDomain: "teste-firebase-db82c.firebaseapp.com",
+    databaseURL: "https://teste-firebase-db82c.firebaseio.com",
+    storageBucket: "teste-firebase-db82c.appspot.com",
 };
 
 var app = firebase.initializeApp(config);
 var database = app.database();
 
-var postsRef = database.ref().child('posts');
+var chatRef = database.ref().child('chat');
 
 
 var transitionContent = document.querySelector('#transition-content'),
-    fab = document.querySelector('#createPost'),
+    fab = document.querySelector('#sendChat'),
     loading = document.querySelector('.loading'),
     content = document.getElementById('content'),
-    postsElement = content.querySelector('.posts');
+    chatMessagesElement = content.querySelector('.chat-messages');
 
 var isNewChild = false;
 
 
 /**
- * Create a new post
+ * Create a new chat
  */
 fab.addEventListener('click', function (e) {
+  e.preventDefault();
 
-  var modal = new Modal({
-    templateUrl: './views/createpost.html',
-    fab: this
-  });
+    var mensagemField = document.querySelector('#mensagem');
+
+    if(localStorage.usuario) {
+      var usuario = JSON.parse(localStorage.usuario);
+    }
+
+    var chat = {
+      usuario: usuario ? usuario.email : null,
+      devideId: (usuario && usuario.devideId) ? usuario.devideId : null,
+      mensagem: mensagemField.value,
+      createdAt: new Date().toISOString(),
+    };
+
+    this.classList.toggle('animate-out');
+    this.classList.add('animate-in');
+
+    mensagemField.value = '';
+
+    isNewChild = true;
+    return chatRef.push().set(chat);
   
-  modal.promise.then(function (a) {
-    document.querySelector('#sendPost').addEventListener('submit', function (e) {
-      e.preventDefault();
-
-      var element = this;
-
-      var titleField = element.querySelector('.title'),
-          descriptionField = element.querySelector('.description');
-
-      var post = {
-        title: titleField.value,
-        description: descriptionField.value,
-        createdAt: new Date().toISOString(),
-        comments: []
-      };
-
-      fab.classList.toggle('animate-out');
-      fab.classList.add('animate-in');
-      transitionContent.classList.toggle('-active');
-      modal.hide();
-      isNewChild = true;
-      new Toast('Post criado com sucesso!', 3000);
-      return postsRef.push().set(post);
-    });
-  });
   
   document.querySelector('.overlay').onclick = function () {
     modal.hide();
@@ -100,6 +92,53 @@ document.querySelector('.toolbar .back-btn').addEventListener('click', function 
 
 
 
+/**************************************
+ * * * * * * *  Login * * * * * * * * 
+ **************************************/
+
+document.querySelector(".login-form").addEventListener('submit', function (e) {
+  e.preventDefault();
+
+ 
+
+
+  var email = document.querySelector('#email');
+
+
+  if (email.value.indexOf('@') > 1) {
+    var nome = email.value.split('@')[0];
+  } else {
+    email.classList.remove('animate-shake');
+    setTimeout(function () {
+      email.classList.add('animate-shake');
+      email.classList.add('error');
+    }, 10)
+    
+    return false;
+  }
+
+
+  document.querySelector('#login').classList.add('animate-out');
+
+  var usuario = {
+    nome: nome,
+    email: email.value,
+    deviceId: deviceId
+  };
+
+  localStorage.usuario = JSON.stringify(usuario);
+
+});
+
+
+if (localStorage.usuario) {
+  document.querySelector('#login').classList.add('animate-out');
+}
+
+
+
+
+
 
 
 
@@ -109,50 +148,72 @@ document.querySelector('.toolbar .back-btn').addEventListener('click', function 
 
 
 /**
- * Called only once, check if there's posts on database
+ * Called only once, check if there's chats on database
  */
-postsRef.once('value').then(function (snapshot) {
-  let posts = snapshot.val(),
+chatRef.once('value').then(function (snapshot) {
+  let chats = snapshot.val(),
       count = 0;
   
-  for (let id in posts) count++;
+  for (let id in chats) count++;
 
   if(count == 0)
-    postsElement.innerHTML = '<h3 class="empty-placeholder">Nenhum post criado</h3>'
+    chatMessagesElement.innerHTML = '<h3 class="empty-placeholder">Nenhum post criado</h3>'
 });
 
 
 /**
  * Listener for each child existing in the database
  */
-postsRef.on('child_added', function (snapshot) {
-  var post = snapshot.val();
+chatRef.on('child_added', function (snapshot) {
+  var chat = snapshot.val();
   loading.classList.add('hide');
-  addCard(post);
+
+  sendNotification(chat);
+
+  addCard(chat);
 });
 
 
 
+function sendNotification (chat) {
+  var usuario = localStorage.usuario ? JSON.parse(localStorage.usuario) : null;
+
+
+  if(chat.deviceId && usuario.deviceId && usuario.deviceId != chat.deviceId){
+    fetch('https://android.googleapis.com/gcm/send/'+usuario.deviceId, {
+      method: 'post',
+      Authorization: 'key=AIzaSyC7r9Fmkmo7pcVd9YwPUJDDNukfs5M2oA4',
+      TTL: 60,
+      'content-type': 'application/json'
+    })
+  }
+
+
+}
+
+
+
 /**
- * create a new card with the post information
+ * create a new card with the chat information
  *
- * @param {object} post Post information
+ * @param {object} chat chat information
  */
-function addCard(post) {
+function addCard(chat) {
   var emptyPlaceholder = document.querySelector('.empty-placeholder');
 
   if(emptyPlaceholder) emptyPlaceholder.remove();
 
 
   let cardWrapper = document.createElement('div');
-  cardWrapper.setAttribute('class', 'card post-item');
+  cardWrapper.setAttribute('class', 'card chat-message');
   if(isNewChild) cardWrapper.classList.add('-highlight');
   cardWrapper.innerHTML = '' +
-    '<h1 class="title">'+post.title+'</h1>'+
+    '<p class="message">'+chat.mensagem+'</p>'+
     '<div class="card-options">' +
-    '<span class="time">'+moment(post.createdAt).fromNow()+'</span>' +
+    '<span class="time">'+moment(chat.createdAt).fromNow()+'</span>' +
     '<span class="comments"></span>' +
     '</div>';
 
-  postsElement.insertBefore(cardWrapper, postsElement.firstChild);
+  chatMessagesElement.appendChild(cardWrapper);
+  // chatMessagesElement.insertBefore(cardWrapper, chatMessagesElement.firstChild);
 }

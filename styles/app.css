@@ -5,8 +5,9 @@
 }
 
 body {
-    background: #ECEFF1;
+    background: #e8ecef;
     color: #455A64;
+    overflow: hidden;
 }
 
 button {
@@ -48,6 +49,32 @@ input, textarea {
     }
 }
 
+@keyframes animate-shake {
+    0% {
+        transform: translateX(-10px);
+    }
+
+    20% {
+        transform: translateX(10px);
+    }
+
+    40% {
+        transform: translateX(-10px);
+    }
+
+    60% {
+        transform: translateX(10px);
+    }
+
+    80% {
+        transform: translateX(-10px);
+    }
+
+    100% {
+        transform: translateX(10px);
+    }
+}
+
 
 @keyframes animate-scale-out {
     0% {
@@ -71,6 +98,11 @@ input, textarea {
     100% {
         background: #FFF;
     }
+}
+
+
+.animate-shake {
+    animation: animate-shake 0.5s  ease-in-out;
 }
 
 
@@ -149,14 +181,68 @@ input, textarea {
     }
 
 
+/**************************************
+ * * * * * * *  Login * * * * * *
+ **************************************/
+#login .logo-wrapper {
+    text-align: center;
+
+}
+
+#login .logo-wrapper img {
+    max-width: 122px;
+    background: #fff;
+    padding: 12px;
+    border-radius: 1000px;
+    box-shadow: 0 0 16px rgba(0,0,0,.15);
+}
+
+#login {
+    background: #FFC006;
+    padding-top: 25%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+}
+
+#login form {
+    margin: 16px;
+    border-radius: 3px;
+    box-shadow: 0 0 15px rgba(0,0,0,.2);
+}
+
+#login fieldset {
+    border: none;
+    background: #fff;
+    padding: 8px;
+}
+
+#login fieldset  button {
+    display: block;
+    margin: auto;
+}
+
+#login fieldset legend {
+    text-align: center;
+}
+    
+#login h3 {
+    text-align: center;
+}
+
 
 
 /**************************************
  * * * * * * *  Content * * * * * * * *
  **************************************/
 #content {
+    width: 100%;
     max-width: 720px;
     margin: auto;
+    height: calc(100vh - 50px);
     border-radius: 3px;
     position: relative;
     overflow: hidden;
@@ -166,7 +252,12 @@ input, textarea {
     padding: 16px;
 }
 
-.post-item.-highlight {
+
+.chat-messages {
+
+}
+
+.chat-item.-highlight {
     animation: bg-highlight 3s ease-out forwards;
     will-change: background-color;
 }
@@ -201,6 +292,21 @@ input, textarea {
     background: #fff;
     padding: 16px;
     border-bottom: 1px solid #ddd;
+    margin: 8px;
+    margin-left: 16px;
+    position: relative;
+}
+
+.card::before {
+    content: '';
+    width: 20px;
+    height: 20px;
+    border-top: 20px solid #fff;
+    border-left: 20px solid transparent;
+
+    position: absolute;
+    left: -12px;
+    top: 0;
 }
 
 
@@ -208,9 +314,13 @@ input, textarea {
     color: #ddd
 }
 
-.card .title {
-    margin-bottom: 24px;
-    font-size: 22px;
+
+.card .message {
+    font-size: 17px;
+}
+
+.card .time {
+    font-size: 14px;
 }
 
 .card .card-options {
@@ -223,24 +333,24 @@ input, textarea {
 
 
 
-.create-form {
+form {
     background: #fff;
     padding: 10px;
 }
 
-.create-form label {
+form label {
     float: left;
     width: 100%;
     margin-bottom: 16px;
 }
 
-.create-form h2 {
+form h2 {
     margin-bottom: 24px;
 }
 
 
-.create-form label input,
-.create-form label textarea {
+form label input,
+form label textarea {
     width: 100%;
     background: transparent;
     border: none;
@@ -249,9 +359,13 @@ input, textarea {
 }
 
 
-.create-form label input:focus,
-.create-form label textarea:focus {
+form label input:focus,
+form label textarea:focus {
     border-bottom-color: #FFA000;
+}
+
+form label input.error {
+    border-color: red;
 }
 
 .btn {
@@ -300,11 +414,12 @@ input, textarea {
     background: #7CB342;
 }
 
-.fab-btn.animate-in {
+.animate-in {
     animation: animate-scale-in 0.2s ease-out forwards;
+    
 }
 
-.fab-btn.animate-out {
+.animate-out {
     animation: animate-scale-out 0.2s ease-out forwards;
 }
 
@@ -379,6 +494,27 @@ input, textarea {
 }
 
 
+
+
+/**************************************
+ * * * * * * *  Forms * * * * * * * * *
+ **************************************/
+ form input{
+    padding: 10px;
+ }
+
+ .send-message {
+    background: transparent;
+    margin-top: 20px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+ }
+
+ .send-message label {
+    float: none;
+ }
 
 
 

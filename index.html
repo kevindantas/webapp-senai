@@ -18,8 +18,29 @@
   </style>
 </head>
 <body>
+
+<div id="login">
+  <div class="logo-wrapper">
+    <img src="images/webchat.svg" alt="Logo" class="logo">
+  </div>
+
+  <form class="login-form">
+
+    <fieldset>
+      <legend><h2>Login</h2></legend>
+
+      <label for="email">Email
+        <input type="text" id="email" placeholder="Digite seu email">
+      </label>
+
+      <button id="logar" class="btn success">Continuar</button>
+    </fieldset>
+      
+  </form>
+</div>
+
 <header class="toolbar">
-  <a href="/">AskNator</a>
+  <a href="/">WebChat</a>
 
   <button class="search-btn">
     <svg viewBox="0 0 24 24"><title>Pesquisar</title>
@@ -43,8 +64,8 @@
 
 
 <section id="content">
-  <h3>Posts</h3>
-  <div class="posts">
+  <h3>Chat</h3>
+  <div class="chat-messages">
     <div class="loading">
     <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="24px" height="30px" viewBox="0 0 24 30" style="enable-background:new 0 0 50 50;" xml:space="preserve">
       <rect x="0" y="0" width="4" height="10" fill="#333" transform="translate(0 7.77778)">
@@ -60,10 +81,17 @@
     </div>
   </div>
 
-  <div id="transition-content"></div>
 
+  <form class="send-message">
+    <label>
+      <input type="text" name="mensagem" id="mensagem" placeholder="Digite a mensagem aqui" maxlength="80">
+    </label>
+    <input type="submit" name="send" class="fab-btn success" value=">" id="sendChat">
+  </form>
+
+  <!-- <div id="transition-content"></div> -->
 </section>
-<button id="createPost" class="fab-btn success animate-in">+</button>
+<!-- <button id="createPost" class="fab-btn success animate-in">+</button> -->
 
 <div class="overlay"></div>
 

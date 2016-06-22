@@ -9,3 +9,38 @@
  *           COLOQUE SEU CÓDIGO AQUI EM BAIXO               *
  *                                                          *
  ************************************************************/
+self.addEventListener('install', function (event) {
+	event.waitUntil(
+		caches.open('my-cache-v2').then(function (cache) {
+			cache.addAll([
+				'/',
+				'styles/app.css',
+				'scripts/app.js',
+				'scripts/main.js',
+				'scripts/feedback.js',
+				'scripts/moment.js'
+				]);
+		})
+		)
+});
+
+
+self.addEventListener('fetch', function(event) {
+	caches.match(event.request).then(function (response) {
+		if (response)return response;
+
+		return fetch(event.request);
+	})
+});
+
+
+self.addEventListener('push', function (event) {
+	console.log(event);
+
+	event.waitUntil(
+		self.registration.showNotification('Titulo da notificacao', {
+			body: 'Your message'
+
+		})
+	)
+})
