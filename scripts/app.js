@@ -43,7 +43,7 @@ fab.addEventListener('click', function (e) {
 
     var chat = {
       usuario: usuario ? usuario.email : null,
-      devideId: (usuario && usuario.devideId) ? usuario.devideId : null,
+      devideId: (usuario && usuario.deviceId) ? usuario.deviceId : null,
       mensagem: mensagemField.value,
       createdAt: new Date().toISOString(),
     };
@@ -177,6 +177,9 @@ chatRef.on('child_added', function (snapshot) {
 
 function sendNotification (chat) {
   var usuario = localStorage.usuario ? JSON.parse(localStorage.usuario) : null;
+
+  // console.log(chat.deviceId);
+  // console.log(usuario.deviceId);
 
 
   if(chat.deviceId && usuario.deviceId && usuario.deviceId != chat.deviceId){
