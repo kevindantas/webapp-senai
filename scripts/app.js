@@ -169,42 +169,8 @@ chatRef.on('child_added', function (snapshot) {
   loading.classList.add('hide');
   var usuario = localStorage.usuario ? JSON.parse(localStorage.usuario) : null;
 
-  sendNotification(chat, usuario);
-
   addCard(chat, usuario);
 });
-
-
-
-function sendNotification (chat, usuario) {
-
-
-
-  if(chat.deviceId && usuario.deviceId && usuario.deviceId != chat.deviceId){
-    var xhttp = new XMLHttpRequest();
-    xhttp.open("POST", 'https://android.googleapis.com/gcm/send/'+usuario.deviceId, true);
-    xhttp.setRequestHeader('Authorization', 'Bearer AIzaSyC7r9Fmkmo7pcVd9YwPUJDDNukfs5M2oA4');
-    xhttp.setRequestHeader('Access-Control-Allow-Origin', 'http://localhost');
-    xhttp.setRequestHeader('TTL', '60');
-    xhttp.withCredentials = false;
-
-    xhttp.send();
-
-    /*fetch(, {
-      method: 'post',
-      
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        mode: 'no-cors',
-            'Host': 'localhost',
-        Authorization: 'Bearer AIzaSyC7r9Fmkmo7pcVd9YwPUJDDNukfs5M2oA4',
-        TTL: 60
-      }
-    })*/
-  }
-
-
-}
 
 
 

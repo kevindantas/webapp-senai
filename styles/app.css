@@ -7,7 +7,6 @@
 body {
     background: #e8ecef;
     color: #455A64;
-    overflow: hidden;
 }
 
 button {
@@ -247,7 +246,6 @@ input, textarea {
     height: calc(100vh - 50px);
     border-radius: 3px;
     position: relative;
-    overflow: hidden;
 }
 
 #content h3{
@@ -517,7 +515,7 @@ form label input.error {
  }
 
  .send-message {
-    background: transparent;
+    background: #e8ecef;
     margin-top: 20px;
     position: absolute;
     bottom: 0;
