@@ -284,6 +284,10 @@ input, textarea {
 }
 
 
+.chat-messages {
+    margin-bottom: 50px;
+}
+
 .card.chat-message {
     background: #fff;
     padding: 16px;
@@ -517,7 +521,7 @@ form label input.error {
  .send-message {
     background: #e8ecef;
     margin-top: 20px;
-    position: absolute;
+    position: fixed;
     bottom: 0;
     left: 0;
     right: 0;

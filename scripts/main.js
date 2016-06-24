@@ -12,7 +12,7 @@ if(navigator.serviceWorker) {
     	userVisibleOnly: true
     }).then(function (subscription) {
     	var replaceUrl = 'https://android.googleapis.com/gcm/send/';
-
+        console.log(subscription.endpoint);
     	deviceId = subscription.endpoint.replace(replaceUrl, '');
     	var usuario = JSON.parse(localStorage.usuario);
 

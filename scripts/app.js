@@ -49,7 +49,10 @@ fab.addEventListener('click', function (e) {
     };
 
     this.classList.toggle('animate-out');
-    this.classList.add('animate-in');
+    setTimeout(_ => {
+      this.classList.toggle('animate-out');
+      this.classList.add('animate-in');
+    }, 400)
 
     mensagemField.value = '';
 
@@ -145,7 +148,6 @@ if (localStorage.usuario) {
 /**************************************
  * * * * *  Firebase Events * * * * * *
  **************************************/
-
 
 /**
  * Called only once, check if there's chats on database
