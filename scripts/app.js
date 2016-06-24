@@ -148,6 +148,7 @@ if (localStorage.usuario) {
 /**************************************
  * * * * *  Firebase Events * * * * * *
  **************************************/
+var canSendNotification = false;
 
 /**
  * Called only once, check if there's chats on database
@@ -160,6 +161,8 @@ chatRef.once('value').then(function (snapshot) {
 
   if(count == 0)
     chatMessagesElement.innerHTML = '<h3 class="empty-placeholder">Nenhum post criado</h3>'
+
+  canSendNotification = true;
 });
 
 
@@ -172,7 +175,27 @@ chatRef.on('child_added', function (snapshot) {
   var usuario = localStorage.usuario ? JSON.parse(localStorage.usuario) : null;
 
   addCard(chat, usuario);
+
+  if(canSendNotification) {
+    sendNotification(chat, usuario);
+  }
 });
+
+function sendNotification (chat, usuario) {
+
+  if(usuario.deviceId && usuario.deviceId != chat.deviceId) {
+    fetch('https://android.googleapis.com/gcm/send/'+deviceId, {
+      headers: {
+        Authorization: 'Bearer AIzaSyC7r9Fmkmo7pcVd9YwPUJDDNukfs5M2oA4',
+        TTL: 60
+      }
+    }).then(data => {
+      console.log(data);
+    }).catch(err => {
+      console.log(err)
+    })
+  }
+}
 
 
 
