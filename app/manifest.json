@@ -1,0 +1,8 @@
+{
+  "name": "Workshop Progressive Web App",
+  "short_name": "Workshop PWA",
+  "description": "There's some tips an references to help build a great app!",
+  "display": "standalone",
+  "theme_color": "#546E7A",
+  "background_color": "#ECEFF1"
+}

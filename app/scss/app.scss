@@ -1,0 +1,203 @@
+$blue-grey-600: #546E7A;
+$cyan-300: #4CCFE0;
+$teal-500: #009587;
+$light-green-500: #8AC249;
+
+* {
+  box-sizing: border-box;
+}
+
+input, button, textarea {
+  outline: none;
+}
+
+body {
+  font-family: 'Roboto';
+  color: #546E7A;
+  margin: 0;
+  padding: 0;
+}
+
+header.navbar {
+
+  background: #112743;
+  height: 90px;
+  padding: 0;
+  color: #CFD8DB;
+
+  h1 {
+    float: left;
+    text-indent: -9999px;
+    background: url(../images/logo.svg) no-repeat;
+    background-size: contain;
+    height: calc(60px);
+    margin: 15px;
+  }
+
+  nav {
+    float: right;
+
+    ul {
+      margin: 0;
+      padding: 0;
+    }
+
+    li {
+      display: inline-block;
+      padding: 30px 20px;
+
+      a {
+        text-decoration: none;
+        color: #CFD8DB;
+        font-size: 20px;
+        text-transform: uppercase;
+      }
+    }
+  }
+
+}
+
+.main {
+  section {
+    float: left;
+    width: 100%;
+
+    article {
+      margin-bottom: 50px;
+    }
+
+    h1 {
+      font-weight: bold;
+      font-size: 40px;
+    }
+
+    h2 {
+      font-weight: 400;
+      text-transform: uppercase;
+    }
+
+    p {
+      font-weight: 300;
+      font-size: 22px;
+    }
+
+    a {
+      font-style: italic;
+      color: #445963;
+      text-decoration: none;
+      font-size: 16px;
+    }
+  }
+
+  .container {
+    max-width: 1280px;
+    margin: auto;
+  }
+
+  ul {
+    li {
+      padding: 5px 0;
+    }
+  }
+}
+
+#banner {
+  background: #ECEEF0;
+  text-align: center;
+
+  h1 {
+    font-weight: bold;
+    font-size: 60px;
+  }
+
+  img {
+    padding: 20px 20px 0 20px;
+    &.desktop {
+      width: 35%;
+    }
+    &.mobile {
+      width: 20%;
+    }
+    &.tablet {
+      width: 20%;
+    }
+  }
+
+  .stripe {
+    margin-top: -40px;
+    padding: 60px 0;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    background: $blue-grey-600;
+    color: #ffffff;
+
+    p {
+      font-size: 28px;
+      line-height: 1.5;
+    }
+  }
+}
+
+#html {
+  .container h1 {
+    border-bottom: 5px solid $teal-500;
+  }
+}
+
+#css {
+  .container h1 {
+    border-bottom: 5px solid $light-green-500
+  }
+}
+
+#js {
+  .container h1 {
+    border-bottom: 5px solid $cyan-300
+  }
+}
+
+@media (max-width: 640px) {
+
+
+  header.navbar {
+    nav {
+      ul {
+        float: none;
+        background: #112743;
+        height: 100%;
+        transform: translateX(-120%);
+        position: fixed;
+        box-shadow: 0 0 20px 5px rgba(0, 0, 0, 0.3);
+        li {
+          display: block;
+          padding-right: 50px;
+        }
+      }
+
+    }
+  }
+
+
+
+  .main .container {
+    padding: 20px;
+  }
+
+  #banner {
+    h1 {
+      font-size: 40px;
+    }
+
+    img {
+      padding: 10px 10px 0 10px;
+    }
+
+    .stripe {
+      padding: 10px 20px;
+      p {
+        font-size: 22px;
+      }
+    }
+  }
+
+}
