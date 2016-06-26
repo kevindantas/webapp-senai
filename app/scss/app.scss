@@ -19,18 +19,19 @@ body {
 }
 
 header.navbar {
-
   background: #112743;
   height: 90px;
   padding: 0;
   color: #CFD8DB;
+  position: relative;
 
   h1 {
     float: left;
-    text-indent: -9999px;
+    width: 50px;
+    height: 60px;
     background: url(../images/logo.svg) no-repeat;
     background-size: contain;
-    height: calc(60px);
+    text-indent: -9999px;
     margin: 15px;
   }
 
@@ -156,11 +157,74 @@ header.navbar {
   }
 }
 
+
+
+.overlay {
+  background: rgba(0, 0, 0, 0.6);
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 5;
+  opacity: 0;
+  pointer-events: none;
+  will-change: opacity;
+  transition: opacity 0.2s ease-in;
+
+  &.-active {
+    opacity: 1;
+    pointer-events: all;
+  }
+}
+
 @media (max-width: 640px) {
 
 
   header.navbar {
+    h1 {
+      margin-left: calc(50% - 25px);
+    }
+
     nav {
+      float: none;
+
+      .toggle-menu {
+        background: #fff;
+        width: 35px;
+        height: 3px;
+        border-radius: 100px;
+        text-indent: -9999px;
+        position: absolute;
+        left: 15px;
+        top: 43px;
+
+
+        &:before {
+          content: '';
+          background: inherit;
+          width: inherit;
+          height: inherit;
+          position: absolute;
+          border-radius: inherit;
+          top: -10px;
+          left: 0;
+        }
+
+
+        &:after {
+          content: '';
+          background: inherit;
+          width: inherit;
+          height: inherit;
+          position: absolute;
+          border-radius: inherit;
+          top: 10px;
+          left: 0;
+        }
+
+      }
+
       ul {
         float: none;
         background: #112743;
@@ -168,6 +232,14 @@ header.navbar {
         transform: translateX(-120%);
         position: fixed;
         box-shadow: 0 0 20px 5px rgba(0, 0, 0, 0.3);
+        will-change: transform;
+        transition: transform 0.2s ease-in;
+        z-index: 10;
+        &.-active {
+          transform: none;
+        }
+
+
         li {
           display: block;
           padding-right: 50px;
