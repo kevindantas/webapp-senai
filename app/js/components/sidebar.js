@@ -14,6 +14,9 @@ class Sidenav {
 		this.sidenavUl = document.querySelector('.navbar .main-menu ul');
 
 
+		this.bodyEl = document.querySelector('body');
+
+
 		this.startX = 0;
 		this.currentX = 0;
 
@@ -29,7 +32,8 @@ class Sidenav {
 		this.onTouchMove = this.onTouchMove.bind(this);
 		this.onTouchEnd = this.onTouchEnd.bind(this);
 		this.update = this.update.bind(this);
-
+		this.onBodyTouchStart = this.onBodyTouchStart.bind(this);
+		this.onBodyTouchEnd = this.onBodyTouchEnd.bind(this);
 
 
 		this.addEventListeners();
@@ -38,7 +42,7 @@ class Sidenav {
 
 	/**
 	 * 
-	 * 
+	 * Attach the event listeners
 	 */
 	addEventListeners () {
 		this.toggleButton.addEventListener('click', this.showSidenav);
@@ -49,12 +53,15 @@ class Sidenav {
 		this.sidenavEl.addEventListener('touchmove', this.onTouchMove);
 		this.sidenavEl.addEventListener('touchend', this.onTouchEnd);
 
+		// User can grad the sidenav (app like)
+		this.bodyEl.addEventListener('touchstart', this.onBodyTouchStart);
+		this.bodyEl.addEventListener('touchend', this.onBodyTouchEnd);
+
 	}
 
 
 	/**
-	 * 
-	 * 
+	 * Move the sidenav according the user's touch
 	 */
 	update () {
 		if(!this.touchingSidenav) return;
@@ -127,10 +134,44 @@ class Sidenav {
 
 	    this.sidenavUl.addEventListener('transitionend', this.onTransitionEnd);
 	    
-	    if(this.currentX < window.outerWidth * 0.75) 
+	    if(translateX < this.sidenavUl.offsetWidth * 1.25) 
 	    	this.hideSidenav();
 	    else 
 	    	this.showSidenav();
+	}
+
+
+
+
+	/**
+	 * Handle the initial user's touch 
+	 * 
+	 * @param {Object} e - The fired event 
+	 */
+	onBodyTouchStart (e) {
+		// If the sidenavEl is visible
+		if(this.sidenavEl.classList.contains('-active'))
+			return;
+
+
+		this.bodyStartX = e.touches[0].pageX;
+		this.bodyStartY = e.touches[0].pageY;
+	}
+
+
+	/**
+	 * Show the sidenav if dragged by the user
+	 *
+	 * @param {Object} e - The fired event 
+	 */
+	onBodyTouchEnd (e) {
+		// If the sidenavEl is visible
+		if(this.sidenavEl.classList.contains('-active'))
+			return;
+
+		let bodyEndX = e.changedTouches[0].pageX;
+		if(this.bodyStartX < 50 && bodyEndX > (this.bodyStartX * 3))
+			this.showSidenav();
 	}
 
 
@@ -148,13 +189,11 @@ class Sidenav {
 
 
 	/**
-	 * 
-	 * 
+	 *  Show the sidenav 
 	 */
 	showSidenav (e) {
 		
 		this.sidenavUl.classList.add('-animated');
-		console.log(this)
 		this.sidenavUl.style.transform = '';
 		this.sidenavEl.classList.add('-active');
 		this.sidenavUl.addEventListener('transitionend', this.onTransitionEnd);
@@ -162,11 +201,11 @@ class Sidenav {
 
 
 	/**
-	 * 
 	 *  Hide the sidenav 
 	 */
 	hideSidenav () {
 		if (!this.sidenavEl.classList.contains('-active')) return;
+
 		this.sidenavUl.classList.add('-animated');
 		this.sidenavEl.classList.remove('-active');
 		this.sidenavUl.style.transform = '';
