@@ -90,6 +90,7 @@ header.navbar {
       color: #445963;
       text-decoration: none;
       font-size: 16px;
+      word-break: break-word;
     }
   }
 
@@ -116,15 +117,9 @@ header.navbar {
 
   img {
     padding: 20px 20px 0 20px;
-    &.desktop {
-      width: 35%;
-    }
-    &.mobile {
-      width: 20%;
-    }
-    &.tablet {
-      width: 20%;
-    }
+    &.desktop {width: 35%; }
+    &.mobile  {width: 20%; }
+    &.tablet  {width: 20%; }
   }
 
   .stripe {
@@ -300,7 +295,11 @@ header.navbar {
     }
 
     img {
-      padding: 10px 10px 0 10px;
+      padding: 0px 0px 0 0px;
+
+      &.desktop {width: 45%; }
+      &.mobile  {width: 25%; }
+      &.tablet  {width: 25%; }
     }
 
     .stripe {
