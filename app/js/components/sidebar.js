@@ -12,9 +12,9 @@ class Sidenav {
 		this.toggleButton = document.querySelector('.toggle-menu');
 		this.sidenavEl = document.querySelector('.navbar .main-menu');
 		this.sidenavUl = document.querySelector('.navbar .main-menu ul');
-
-
 		this.bodyEl = document.querySelector('body');
+
+		this.isTransiting = false;
 
 
 		this.startX = 0;
@@ -52,12 +52,12 @@ class Sidenav {
 		this.sidenavEl.addEventListener('touchstart', this.onTouchStart);
 		this.sidenavEl.addEventListener('touchmove', this.onTouchMove);
 		this.sidenavEl.addEventListener('touchend', this.onTouchEnd);
-
 		// User can grad the sidenav (app like)
 		this.bodyEl.addEventListener('touchstart', this.onBodyTouchStart);
 		this.bodyEl.addEventListener('touchend', this.onBodyTouchEnd);
-
 	}
+
+	
 
 
 	/**
@@ -134,7 +134,7 @@ class Sidenav {
 
 	    this.sidenavUl.addEventListener('transitionend', this.onTransitionEnd);
 	    
-	    if(translateX < this.sidenavUl.offsetWidth * 1.25) 
+     	if(translateX < this.sidenavUl.offsetWidth * 1.25)
 	    	this.hideSidenav();
 	    else 
 	    	this.showSidenav();
@@ -150,7 +150,7 @@ class Sidenav {
 	 */
 	onBodyTouchStart (e) {
 		// If the sidenavEl is visible
-		if(this.sidenavEl.classList.contains('-active'))
+		if(this.sidenavEl.classList.contains('-active') || this.isTransiting)
 			return;
 
 
@@ -166,11 +166,11 @@ class Sidenav {
 	 */
 	onBodyTouchEnd (e) {
 		// If the sidenavEl is visible
-		if(this.sidenavEl.classList.contains('-active'))
+		if(this.sidenavEl.classList.contains('-active') || this.isTransiting)
 			return;
-
 		let bodyEndX = e.changedTouches[0].pageX;
-		if(this.bodyStartX < 50 && bodyEndX > (this.bodyStartX * 3))
+
+		if(this.bodyStartX < 100 && bodyEndX > this.bodyStartX)
 			this.showSidenav();
 	}
 
@@ -184,6 +184,7 @@ class Sidenav {
 		this.sidenavUl.classList.remove('-animated');
 		this.sidenavEl.style.transform = '';
 		this.sidenavUl.style.transform = '';
+		this.isTransiting = false;
 		this.sidenavEl.removeEventListener('transitionend', this.onTransitionEnd);
 	}
 
@@ -192,7 +193,6 @@ class Sidenav {
 	 *  Show the sidenav 
 	 */
 	showSidenav (e) {
-		
 		this.sidenavUl.classList.add('-animated');
 		this.sidenavUl.style.transform = '';
 		this.sidenavEl.classList.add('-active');
@@ -206,6 +206,7 @@ class Sidenav {
 	hideSidenav () {
 		if (!this.sidenavEl.classList.contains('-active')) return;
 
+		this.isTransiting = true;
 		this.sidenavUl.classList.add('-animated');
 		this.sidenavEl.classList.remove('-active');
 		this.sidenavUl.style.transform = '';
