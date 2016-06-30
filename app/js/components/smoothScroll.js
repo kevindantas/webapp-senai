@@ -150,8 +150,3 @@ class SmoothScroll {
 		this.scroll();
 	}
 }
-
-
-var smoothScroll = new SmoothScroll();
-
-smoothScroll.scrollTo('#css');
