@@ -7,11 +7,11 @@ var rename    = require('gulp-rename');
 var paths = {
   sass: ['./app/scss/**/*.scss'],
   js: ['./app/js/components/*.js', './app/js/*.js'],
-  html: ['./app/index.html', './app/**/*.html'],
+  files: ['./app/index.html', './app/**/*.html', './app/apresentacao1Dia.pdf', './app/apresentacao2Dia.pdf'],
   images: ['./app/images/**/**']
 };
 
-gulp.task('default', ['sass', 'js', 'watch', 'copyHtml', 'copyImages']);
+gulp.task('default', ['sass', 'js', 'watch', 'copyFiles', 'copyImages']);
 
 
 /**
@@ -44,8 +44,8 @@ gulp.task('js', done => {
 /**
  * Copy the HTML files
  */
-gulp.task('copyHtml', done => {
-  gulp.src(paths.html)
+gulp.task('copyFiles', done => {
+  gulp.src(paths.files)
     .pipe(gulp.dest('./build/'))
     .on('end', done);
 });
@@ -67,7 +67,7 @@ gulp.task('copyImages', done => {
 gulp.task('watch', _ =>  {
   gulp.watch(paths.sass, ['sass']);
   gulp.watch(paths.js, ['js']);
-  gulp.watch(paths.html, ['copyHtml']);
+  gulp.watch(paths.files, ['copyFiles']);
 });
 
 
